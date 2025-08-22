@@ -1,88 +1,103 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-    <head>
-        <meta charset="UTF-8">
-        <title>Decks 'N' Choices</title>
+<head>
+  <meta charset="UTF-8">
+  <title>Decks 'N' Choices</title>
+  <style>
+    #devSessao { display: none; text-align: center; }
+    .Container { display:flex; justify-content:center; align-items:center; height:45vh; }
+    .startGame { display:flex; justify-content:center; align-items:center; height:52vh; }
 
-        <style>
-            #devSessao{
-                display: none;
-                text-align: center;
-            }
+  
+    #btnVoltar{
+        display: none;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 10px 15px;
+        cursor: pointer;
+        z-index: 1000;
+    }
 
-            .Container{
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 45vh;
-            }
+   
+    #btnDevs{
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        padding: 10px 15px;
+        cursor: pointer;
+        z-index: 1000;
+    }
+  </style>
+</head>
+<body>
 
-            .startGame{
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 52vh;
-            }
-        </style>
-    </head>
+  <button id="btnDevs">Devs</button>
+  <button id="btnVoltar">Voltar</button>
 
-    <body>
+  <div id="devSessao">
+    <h1>Desenvolvedores:</h1>
+    <h3>Alan KauÊ - Game Design/Game Artist</h3>
+    <h3>William Davisson - Game Development</h3>
+    <h3>João Victor - Game Development</h3>
+    <h3>Frank Hudson - Sound design</h3>
+    <h3>Carslos Gabriel - Sound design</h3>
+    <br><br><br><br><br>
+    <h4>An J.A.B CodeStudios Game</h4>
+  </div>
 
-        <div id="voltar">
-            <button id="btnVoltar">Voltar</button>
-        </div>
+  <div id="telaInicial">
+    <div class="Container"><h1>Decks 'N' Choices</h1></div>
+  </div>
 
-        <div class="screenDevs">
-            <button id="btnDevs">Devs</button>
-        </div>
+  <div id="startGame" class="startGame">
+    <h3>Aperte "ESPAÇO" para jogo</h3>
+  </div>
 
-        <div id="devSessao">
-            <h1>Desenvolvedores:</h1>
-            <h3>Alan KauÊ - Game Design/Game Artist</h3>
-            <h3>William Davisson - Game Development</h3>
-            <h3>João Victor - Game Development</h3>
-            <h3>Frank Hudson - Sound design</h3>
-            <h3>Carslos Gabriel - Sound design</h3>
-            <br><br><br><br><br>
-            <h4>An J.A.B CodeStudios Game</h4></h1>
-        </div>
+  <script>
+    const btnDevs = document.getElementById('btnDevs');
+    const btnVoltar = document.getElementById('btnVoltar');
+    const telaInicial = document.getElementById('telaInicial');
+    const devSessao = document.getElementById('devSessao');
+    const startGame = document.getElementById('startGame');
 
-        <div id="telaInicial">
-            <div class="Container">
-                <h1>Decks 'N' Choices</h1>
-            </div>
-        </div>
+    
+    btnDevs.addEventListener('click', () => {
+      telaInicial.style.display = 'none';
+      startGame.style.display = 'none';
+      devSessao.style.display = 'block';
+      btnVoltar.style.display = 'block'; 
+      btnDevs.style.display = 'none';    
+    });
 
-        <div id="startGame" class="startGame">
-            <h3>Aperte "ESPAÇO" para jogo</h3>
-        </div>
+    
+    btnVoltar.addEventListener('click', () => {
+      devSessao.style.display = 'none';
+      telaInicial.style.display = 'block';
+      startGame.style.display = 'flex';
+      btnVoltar.style.display = 'none';   
+      btnDevs.style.display = 'block';    
+    });
 
-        <script>
-            const btnDevs = document.getElementById('btnDevs');
-            const telaInicial = document.getElementById('telaInicial');
-            const devSessao = document.getElementById('devSessao');
-            const startGame = document.getElementById('startGame');
-            const btnVoltar = document.getElementById('btnVoltar')
+    
+    document.addEventListener('keydown', function(event){
+      if(event.code === 'Space' || event.key === ' ' || event.key === 'Spacebar'){
+        const telaInicialVisivel = window.getComputedStyle(telaInicial).display !== 'none';
+        const startGameVisivel = window.getComputedStyle(startGame).display !== 'none';
+        if(telaInicialVisivel && startGameVisivel){
+          event.preventDefault();
+          location.assign('DNCTelaJogo.html');
+        }
+      }
+    });
 
-            btnDevs.addEventListener('click', () => {
-                if(telaInicial) telaInicial.style.display = 'none';
-                if(startGame) startGame.style.display = 'none'
-                
-                if(devSessao) devSessao.style.display = 'block';
-            });   
-        </script>
-        
-        <script>
-            document.addEventListener("keydown", function(event){
-                const telaInicial = telaInicial && window.getComputedStyle(telaInicial).display !== 'none';
-                const startGameVisivel = startGame && window.getComputedStyle(startGame).display !== 'none';
+    
+    devSessao.style.display = 'none';
+    telaInicial.style.display = 'block';
+    startGame.style.display = 'flex';
+    btnVoltar.style.display = 'none'; 
+    btnDevs.style.display = 'block';  
+  </script>
 
-                const homeVisivel = telaInicial && startGameVisivel;
-                
-                if(event.code === "Space" && homeVisivel){
-                    window.location.href = "DNCTelaJogo.html";
-                }
-            });
-        </script>
-    </body>
-</html>     
+</body>
+</html>
