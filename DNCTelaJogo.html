@@ -21,37 +21,38 @@
       text-align: center;
     }
 
-   #quizDNC {
-  display: flex;
-  gap: 13px;
-  flex-direction: row;
-  margin-top: 40px;
-  flex-wrap: wrap; 
-  justify-content: center;
-}
+    #quizDNC h3 {
+      margin-bottom: 20px;
+    }
 
-#quizDNC button {
-  padding: 20px;
-  font-size: 16px;
-  cursor: pointer;
-  width: 150px;
-  height: 200px;
-  border: 1px solid #ccc;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  background-color: white;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
+    #respostas {
+      display: flex;
+      gap: 13px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
 
-#quizDNC button:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
+    #respostas button {
+      padding: 20px;
+      font-size: 16px;
+      cursor: pointer;
+      width: 150px;
+      height: 200px;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      background-color: white;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
 
+    #respostas button:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
 
     #mensagem {
       margin-top: 25px;
@@ -125,7 +126,6 @@
     };
 
     function diffSelect(dificuldade){
-
       if (!perguntas[dificuldade]) {
         document.getElementById("mensagem").innerText = "Dificuldade inválida.";
         return;
@@ -140,15 +140,8 @@
     function mostrarPergunta(){
       const quizDC = document.getElementById("quizDNC");
 
-      if (!difEscolhida) {
-        quizDC.innerHTML = html;
-        return;
-      }
-
-      
       const lista = perguntas[difEscolhida];
       if (!lista || indPergunta >= lista.length) {
-       
         quizDC.innerHTML = "";
         document.getElementById("mensagem").innerText = `Você completou o jogo na dificuldade ${difEscolhida.replace("dif", "")}`;
         document.getElementById("botaoDiff").style.display = "block";
@@ -164,18 +157,19 @@
       const pergAtual = lista[indPergunta];
 
       let html = `<h3>${pergAtual.pergunta}</h3>`;
+      html += `<div id="respostas">`;
       pergAtual.respostas.forEach((resposta, i) => {
         html += `<button class="respBtn" data-index="${i}">${resposta}</button>`;
       });
-
+      html += `</div>`;
       quizDC.innerHTML = html;
+      
       document.getElementById("mensagem").innerText = "";
 
       const botoes = quizDC.querySelectorAll(".respBtn");
       botoes.forEach(btn => {
-        btn.addEventListener("click", function handler(e){
+        btn.addEventListener("click", function(){
           const idx = Number(this.getAttribute("data-index"));
-
           botoes.forEach(b => b.disabled = true);
           verifRes(idx);
         });
@@ -183,7 +177,6 @@
     }
 
     function verifRes(indResposta){
- 
       if (!difEscolhida) return;
       const lista = perguntas[difEscolhida];
       if (!lista || indPergunta >= lista.length) return;
@@ -229,3 +222,4 @@
   </script>
 </body>
 </html>
+
