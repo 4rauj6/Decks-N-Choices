@@ -25,7 +25,7 @@
       display: flex;
       gap: 13px;
       flex-direction: column;
-      margin-top: 12px;
+      margin-top: 40px; 
     }
 
     #quizDNC button {
@@ -107,7 +107,7 @@
     };
 
     function diffSelect(dificuldade){
-      // seta a dificuldade apenas se existir no objeto perguntas
+   
       if (!perguntas[dificuldade]) {
         document.getElementById("mensagem").innerText = "Dificuldade inválida.";
         return;
@@ -122,20 +122,18 @@
     function mostrarPergunta(){
       const quizDC = document.getElementById("quizDNC");
 
-      // proteção: verificar se dificuldade foi escolhida
       if (!difEscolhida) {
         quizDC.innerHTML = html;
         return;
       }
 
-      // proteção: índice dentro do array
       const lista = perguntas[difEscolhida];
       if (!lista || indPergunta >= lista.length) {
-        // finaliza a dificuldade
+
         quizDC.innerHTML = "";
         document.getElementById("mensagem").innerText = `Você completou o jogo na dificuldade ${difEscolhida.replace("dif", "")}`;
         document.getElementById("botaoDiff").style.display = "block";
-        // checa vitória total
+       
         if (verVitoria()) {
           quizDC.innerHTML = "<h2>Você zerou o jogo em todas as dificuldades! És um verdadeiro programador!</h2>";
           document.getElementById("botaoDiff").style.display = "none";
@@ -146,7 +144,6 @@
 
       const pergAtual = lista[indPergunta];
 
-      // monta HTML das respostas
       let html = `<h3>${pergAtual.pergunta}</h3>`;
       pergAtual.respostas.forEach((resposta, i) => {
         html += `<button class="respBtn" data-index="${i}">${resposta}</button>`;
@@ -155,12 +152,11 @@
       quizDC.innerHTML = html;
       document.getElementById("mensagem").innerText = "";
 
-      // adiciona listeners nas respostas (evita inline onclick)
       const botoes = quizDC.querySelectorAll(".respBtn");
       botoes.forEach(btn => {
         btn.addEventListener("click", function handler(e){
           const idx = Number(this.getAttribute("data-index"));
-          // desativa todos os botões para evitar múltiplos cliques
+        
           botoes.forEach(b => b.disabled = true);
           verifRes(idx);
         });
@@ -168,7 +164,7 @@
     }
 
     function verifRes(indResposta){
-      // proteção: se nada selecionado
+     
       if (!difEscolhida) return;
       const lista = perguntas[difEscolhida];
       if (!lista || indPergunta >= lista.length) return;
@@ -183,7 +179,7 @@
       } else {
         mensagemRes.style.color = "red";
         mensagemRes.innerText = "Você errou... que pena!";
-        // não avança quando erra (comportamento original)
+        
         return;
       }
 
@@ -209,7 +205,7 @@
       return Object.values(acertos).every(arr => arr.every(val => val === true));
     }
 
-    // inicia mostrando a escolha de dificuldade
+
     (function init(){
       mostrarPergunta();
     })();
