@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <title>Decks 'N' Choices</title>
+
+        <style>
+            #devSessao{
+                display: none;
+                text-align: center;
+            }
+
+            .Container{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 45vh;
+            }
+
+            .startGame{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 52vh;
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <div id="voltar">
+            <button id="btnVoltar">Voltar</button>
+        </div>
+
+        <div class="screenDevs">
+            <button id="btnDevs">Devs</button>
+        </div>
+
+        <div id="devSessao">
+            <h1>Desenvolvedores:</h1>
+            <h3>Alan KauÊ - Game Design/Game Artist</h3>
+            <h3>William Davisson - Game Development</h3>
+            <h3>João Victor - Game Development</h3>
+            <h3>Frank Hudson - Sound design</h3>
+            <h3>Carslos Gabriel - Sound design</h3>
+            <br><br><br><br><br>
+            <h4>An J.A.B CodeStudios Game</h4></h1>
+        </div>
+
+        <div id="telaInicial">
+            <div class="Container">
+                <h1>Decks 'N' Choices</h1>
+            </div>
+        </div>
+
+        <div id="startGame" class="startGame">
+            <h3>Aperte "ESPAÇO" para jogo</h3>
+        </div>
+
+        <script>
+            const btnDevs = document.getElementById('btnDevs');
+            const telaInicial = document.getElementById('telaInicial');
+            const devSessao = document.getElementById('devSessao');
+            const startGame = document.getElementById('startGame');
+            const btnVoltar = document.getElementById('btnVoltar')
+
+            btnDevs.addEventListener('click', () => {
+                if(telaInicial) telaInicial.style.display = 'none';
+                if(startGame) startGame.style.display = 'none'
+                
+                if(devSessao) devSessao.style.display = 'block';
+            });   
+        </script>
+        
+        <script>
+            document.addEventListener("keydown", function(event){
+                const telaInicial = telaInicial && window.getComputedStyle(telaInicial).display !== 'none';
+                const startGameVisivel = startGame && window.getComputedStyle(startGame).display !== 'none';
+
+                const homeVisivel = telaInicial && startGameVisivel;
+                
+                if(event.code === "Space" && homeVisivel){
+                    window.location.href = "DNCTelaJogo.html";
+                }
+            });
+        </script>
+    </body>
+</html>     
