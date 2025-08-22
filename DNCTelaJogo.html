@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz DNC</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+    }
+
+    .pergBox {
+      
+      text-align: center;
+    }
+
+    #quizDNC {
+      display: flex;
+      gap: 13px;
+      flex-direction: column;
+      margin-top: ;
+    }
+
+    #quizDNC button {
+      padding: 15px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #mensagem {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    #botaoDiff {
+      margin-bottom: 30px;
+    }
+  </style>
+</head>
+<body>
+  <div class="pergBox">
+    <div id="botaoDiff">
+      <h2>Escolha a dificuldade:</h2>
+      <button onclick="diffSelect('difFacil')">Fácil</button>
+      <button onclick="diffSelect('difMedio')">Médio</button>
+      <button onclick="diffSelect('difHard')">Difícil</button>
+    </div>
+
+    <div id="quizDNC"></div>
+    <div id="mensagem"></div>
+  </div>
+
+  <script>
+    const perguntas = {
+      difFacil:[
+        { pergunta: "Quem é considerado o Pai da Computação/Programação?", respostas: ["Bill Gates", "Alan Turing", "Mark Zuckerberg"], correta: 1 },
+        { pergunta: "Qual símbolo usamos para comentar uma linha em JavaScript?", respostas: ["//", "/* */", "#"], correta: 0 },
+        { pergunta: "Qual é a saída de 2 + 2 em JavaScript?", respostas: ["22", "4", "Não há como fazer conta em JavaScript"], correta: 1 },
+        { pergunta: "O que significa 'HTML'?", respostas: ["HyperText Markup Language", "HighText Machine Language", "Hyperlinks and Text Markup"], correta: 0 },
+        { pergunta: "Qual linguagem é conhecida por ser usada em Android?", respostas: ["Java", "Swift", "PHP"], correta: 0 }
+      ],
+      difMedio:[
+        { pergunta: "Qual a função de uma <div> em HTML?", respostas: ["Agrupar e organizar elementos de uma página WEB", "Deixar o texto em negrito", "Criar links acessíveis ao usuário"], correta: 0 },
+        { pergunta: "Qual a diferença entre '==' e '===' no JavaScript?", respostas: ["Não há diferença", "'==' compara valor, '===' compara valor e tipo", "'===' compara só valor"], correta: 1 },
+        { pergunta: "O que é um 'array'?", respostas: ["Uma função", "Uma lista de elementos", "Um tipo de loop"], correta: 1 },
+        { pergunta: "Qual dessas linguagens é tipada dinamicamente?", respostas: ["C", "Python", "Java"], correta: 1 },
+        { pergunta: "O que significa 'IDE'?", respostas: ["Integrated Development Environment", "Internal Data Element", "Interface Design Example"], correta: 0 }
+      ],
+      difHard: [
+        { pergunta: "Qual é a complexidade de tempo de uma busca binária em um array ordenado?", respostas: ["O(n)", "O(log n)", "O(n²)"], correta: 1 },
+        { pergunta: "Em JavaScript, qual dessas declarações cria uma variável imutável?", respostas: ["var", "let", "const"], correta: 2 },
+        { pergunta: "Qual é a saída de 'console.log(typeof NaN)' em JavaScript?", respostas: ["number", "NaN", "InNaN"], correta: 0 },
+        { pergunta: "Em orientação a objetos, o que é 'encapsulamento'?", respostas: ["Esconder detalhes internos de uma classe", "Herdar métodos de outra classe", "Criar múltiplos objetos"], correta: 0 },
+        { pergunta: "Qual algoritmo é mais eficiente para ordenar um array grande já parcialmente ordenado?", respostas: ["Bubble Sort", "Quick Sort", "Insertion Sort"], correta: 2 }
+      ]
+    };
+
+    let difEscolhida = "";
+    let indPergunta = 0;
+
+    let acertos = {
+      difFacil: new Array(perguntas.difFacil.length).fill(false),
+      difMedio: new Array(perguntas.difMedio.length).fill(false),
+      difHard: new Array(perguntas.difHard.length).fill(false)
+    };
+
+    function diffSelect(dificuldade){
+      difEscolhida = dificuldade;
+      indPergunta = 0;
+      document.getElementById("botaoDiff").style.display = "none";
+      document.getElementById("mensagem").innerText = "";
+      mostrarPergunta();
+    }
+
+    function mostrarPergunta(){
+      const quizDC = document.getElementById("quizDNC");
+      const pergAtual = perguntas[difEscolhida][indPergunta];
+      
+      let html = `<h3>${pergAtual.pergunta}</h3>`;
+      pergAtual.respostas.forEach((resposta, i) => {
+        html += `<button onclick="verifRes(${i})">${resposta}</button>`;
+      });
+
+      quizDC.innerHTML = html;
+      document.getElementById("mensagem").innerText = "";
+    }
+
+    function verifRes(indResposta){
+      const pergAtual = perguntas[difEscolhida][indPergunta];
+      const mensagemRes = document.getElementById("mensagem");
+
+      if(indResposta === pergAtual.correta){
+        mensagemRes.style.color = "green";
+        mensagemRes.innerText = "Parabéns, você acertou!";
+      } else {
+        mensagemRes.style.color = "red";
+        mensagemRes.innerText = "Você errou... que pena!";
+        return;
+      }
+
+      acertos[difEscolhida][indPergunta] = true;
+      indPergunta++;
+
+      if(indPergunta < perguntas[difEscolhida].length){
+        setTimeout(mostrarPergunta, 1000);
+      } else {
+        setTimeout(() => {
+          document.getElementById("mensagem").innerText = `Você completou o jogo na dificuldade ${difEscolhida.replace("dif", "")}`;
+          document.getElementById("botaoDiff").style.display = "block";
+          document.getElementById("quizDNC").innerHTML = "";
+          if(verVitoria()){
+            document.getElementById("quizDNC").innerHTML = "<h2>Você zerou o jogo em todas as dificuldades! És um verdadeiro programador!</h2>";
+            document.getElementById("botaoDiff").style.display = "none";
+            document.getElementById("mensagem").innerText = "";
+          }
+        }, 1000);
+      }
+    }
+
+    function verVitoria(){
+      return Object.values(acertos).every(arr => arr.every(val => val === true));
+    }
+  </script>
+</body>
+</html>
