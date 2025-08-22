@@ -64,14 +64,11 @@
       margin-bottom: 30px;
     }
 
-    .correct {
-      background: #e8f5e9;
-      border: 1px solid #2e7d32;
+    #botoesControle {
+      margin-top: 20px;
+      display: none;
     }
-    .wrong {
-      background: #ffebee;
-      border: 1px solid #c62828;
-    }
+
     button:disabled {
       opacity: 0.7;
       cursor: default;
@@ -88,6 +85,12 @@
     </div>
 
     <div id="quizDNC"></div>
+
+    <div id="botoesControle">
+      <button id="voltarBtn">Voltar</button>
+      <button id="recomecarBtn">Recomeçar</button>
+    </div>
+
     <div id="mensagem" aria-live="polite"></div>
   </div>
 
@@ -107,7 +110,7 @@
         { pergunta: "Qual dessas linguagens é tipada dinamicamente?", respostas: ["C", "Python", "Java"], correta: 1 },
         { pergunta: "O que significa 'IDE'?", respostas: ["Integrated Development Environment", "Internal Data Element", "Interface Design Example"], correta: 0 }
       ],
-      difHard: [
+      difHard:[
         { pergunta: "Qual é a complexidade de tempo de uma busca binária em um array ordenado?", respostas: ["O(n)", "O(log n)", "O(n²)"], correta: 1 },
         { pergunta: "Em JavaScript, qual dessas declarações cria uma variável imutável?", respostas: ["var", "let", "const"], correta: 2 },
         { pergunta: "Qual é a saída de 'console.log(typeof NaN)' em JavaScript?", respostas: ["number", "NaN", "InNaN"], correta: 0 },
@@ -119,107 +122,85 @@
     let difEscolhida = "";
     let indPergunta = 0;
 
-    let acertos = {
-      difFacil: new Array(perguntas.difFacil.length).fill(false),
-      difMedio: new Array(perguntas.difMedio.length).fill(false),
-      difHard: new Array(perguntas.difHard.length).fill(false)
-    };
+    const quizDC = document.getElementById("quizDNC");
+    const botoesControle = document.getElementById("botoesControle");
+    const voltarBtn = document.getElementById("voltarBtn");
+    const recomecarBtn = document.getElementById("recomecarBtn");
+    const botaoDiff = document.getElementById("botaoDiff");
+    const mensagem = document.getElementById("mensagem");
 
     function diffSelect(dificuldade){
-      if (!perguntas[dificuldade]) {
-        document.getElementById("mensagem").innerText = "Dificuldade inválida.";
-        return;
-      }
       difEscolhida = dificuldade;
       indPergunta = 0;
-      document.getElementById("botaoDiff").style.display = "none";
-      document.getElementById("mensagem").innerText = "";
+      botaoDiff.style.display = "none";
+      botoesControle.style.display = "block";
       mostrarPergunta();
     }
 
     function mostrarPergunta(){
-      const quizDC = document.getElementById("quizDNC");
+      if(!difEscolhida) return;
 
       const lista = perguntas[difEscolhida];
-      if (!lista || indPergunta >= lista.length) {
+      if(!lista || indPergunta >= lista.length){
         quizDC.innerHTML = "";
-        document.getElementById("mensagem").innerText = `Você completou o jogo na dificuldade ${difEscolhida.replace("dif", "")}`;
-        document.getElementById("botaoDiff").style.display = "block";
-      
-        if (verVitoria()) {
-          quizDC.innerHTML = "<h2>Você zerou o jogo em todas as dificuldades! És um verdadeiro programador!</h2>";
-          document.getElementById("botaoDiff").style.display = "none";
-          document.getElementById("mensagem").innerText = "";
-        }
+        mensagem.innerText = `Você completou o jogo na dificuldade ${difEscolhida.replace("dif","")}`;
         return;
       }
 
       const pergAtual = lista[indPergunta];
-
       let html = `<h3>${pergAtual.pergunta}</h3>`;
       html += `<div id="respostas">`;
-      pergAtual.respostas.forEach((resposta, i) => {
+      pergAtual.respostas.forEach((resposta, i)=>{
         html += `<button class="respBtn" data-index="${i}">${resposta}</button>`;
       });
       html += `</div>`;
       quizDC.innerHTML = html;
-      
-      document.getElementById("mensagem").innerText = "";
+      mensagem.innerText = "";
 
       const botoes = quizDC.querySelectorAll(".respBtn");
-      botoes.forEach(btn => {
+      botoes.forEach(btn=>{
         btn.addEventListener("click", function(){
           const idx = Number(this.getAttribute("data-index"));
-          botoes.forEach(b => b.disabled = true);
+          botoes.forEach(b=>b.disabled=true);
           verifRes(idx);
         });
       });
     }
 
     function verifRes(indResposta){
-      if (!difEscolhida) return;
       const lista = perguntas[difEscolhida];
-      if (!lista || indPergunta >= lista.length) return;
-
       const pergAtual = lista[indPergunta];
-      const mensagemRes = document.getElementById("mensagem");
-
       if(indResposta === pergAtual.correta){
-        mensagemRes.style.color = "green";
-        mensagemRes.innerText = "Parabéns, você acertou!";
-        acertos[difEscolhida][indPergunta] = true;
-      } else {
-        mensagemRes.style.color = "red";
-        mensagemRes.innerText = "Você errou... que pena!";
-        return;
+        mensagem.style.color = "green";
+        mensagem.innerText = "Parabéns, você acertou!";
+      }else{
+        mensagem.style.color = "red";
+        mensagem.innerText = "Você errou... que pena!";
       }
-
       indPergunta++;
-
-      if(indPergunta < perguntas[difEscolhida].length){
-        setTimeout(mostrarPergunta, 1000);
-      } else {
-        setTimeout(() => {
-          document.getElementById("mensagem").innerText = `Você completou o jogo na dificuldade ${difEscolhida.replace("dif", "")}`;
-          document.getElementById("botaoDiff").style.display = "block";
-          document.getElementById("quizDNC").innerHTML = "";
-          if(verVitoria()){
-            document.getElementById("quizDNC").innerHTML = "<h2>Você zerou o jogo em todas as dificuldades! És um verdadeiro programador!</h2>";
-            document.getElementById("botaoDiff").style.display = "none";
-            document.getElementById("mensagem").innerText = "";
-          }
-        }, 1000);
-      }
+      setTimeout(mostrarPergunta, 1000);
     }
 
-    function verVitoria(){
-      return Object.values(acertos).every(arr => arr.every(val => val === true));
-    }
+    voltarBtn.addEventListener("click", ()=>{
+      // Voltar para a tela inicial
+      difEscolhida = "";
+      indPergunta = 0;
+      quizDC.innerHTML = "";
+      botaoDiff.style.display = "block";
+      botoesControle.style.display = "none";
+      mensagem.innerText = "";
+    });
+
+    recomecarBtn.addEventListener("click", ()=>{
+      indPergunta = 0;
+      mostrarPergunta();
+    });
 
     (function init(){
-      mostrarPergunta();
+      quizDC.innerHTML = "";
     })();
   </script>
 </body>
 </html>
+
 
