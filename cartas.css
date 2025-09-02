@@ -1,40 +1,51 @@
-* {
-    margin: 0 ;
+body {
+    margin: 0;
     padding: 0;
     box-sizing: border-box;
+    background: linear-gradient(rgb(206, 219, 19), rgb(107, 129, 7), rgb(43, 42, 2));
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden; 
 }
 
 .telaInicial {
-    display: block;
-    text-align: center;
-    margin-top: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
     font-family: "Jersey 25", sans-serif;
-    color: rgb(226, 230, 14);
+    color: rgb(251, 255, 0);
     text-shadow: 0px 8px 0px black;
     font-size: 45px;
+    margin-top: 10px;
 }
 
 .click {
-    text-align: center;
-    margin-top: 20%;
-    font-family: "Jersey 25", sans-serif;
-    color: rgb(226, 230, 14);
+    margin-top: 5%;
+    font-size: 30px;
     text-shadow: 0px 3px 0px black;
-    font-size: 40px;
 }
 
 .telaJogo {
+    font-family: "Jersey 25", sans-serif;
+    color: rgb(251, 255, 0);
     display: none;
+    height: 100vh;
+    width: 100vw;
+    text-shadow: 0px 5px 0px rgb(0, 0, 0);
     text-align: center;
-    margin: 1.8%;
-    grid-template-columns: max-content;
 }
 
-.img {
-    display: none;
-    height: auto;
-    width: 1000%;
-    align-content: center;
-    max-width: 100vh;
-    object-fit: cover;
+
+.bgJogo {
+    background: url(068616d22c66bb75e461045ee69e00af.jpg) no-repeat center center;
+    background-size: cover; 
+}
+
+.loginJogador {
+    font-family: "Jersey 25", sans-serif;
+    color: rgb(226, 230, 14);
+    text-shadow: 0px 6px 0px rgb(0, 0, 0);
+    text-align: center;
 }
