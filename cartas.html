@@ -1,64 +1,56 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
     <head>
+        
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            
+
         <link rel="stylesheet" href="cartas.css">
-        <script src="cartas.js"></script>
+        <script src="cartas.js" defer></script>
 
-        <style>@import url('https://fonts.googleapis.com/css2?family=Jersey+15&family=Jersey+25&display=swap');</style>
-            
         <title>Missao EPI</title>
-    </head>
     
+    </head>
+
     <body>
-        <div class="telaInicial">
-            
-            <br><br><br><br>
-            <h1>Missão EPI</h1>
-            <br><br><br>
-            <div class="click">Aperte "ESPAÇO" para jogar</div>
-        
-        </div>
+    
+        <main>
 
-        <div class="loginJogador">
+            <section class="login" >
 
-            <h1>Para começar<br>faça seu login
-            
-            <div class="user">
-
-                <p>Login:</p>
-                <input id="username" placeholder="Digite o seu Username">
-            
-            </div>
-
-            <div class="emaiPut">
-
-                <p>Email:</p>
-                <input id="emailUser" placeholder="Digite seu e-Mail" type="password">
+                <img src="jab-removebg-preview.jpg" class="jab">
                 
-                <label>
+                <h1 class="login_apresent">Crie sua conta aqui e agora!</h1>
+
+                <label class="loginInput">
                     
-                    <input type="checkbox" onclick="togglePasswordVisibility()" id="verSenha">
-                    <i class="uil uil-eye-slash"></i>
+                    <span>Nome de usuário</span>
+                    <input type="text" id="username" placeholder="Usuário" class="inputBarUser"><br>
                 
                 </label>
-            </div>
 
-            <div class="submitInfos">
+                <label class="loginInput">
 
-                <button class="submit">Confirmar</button>
+                    <span>Senha</span>
+                    <input type="password" id="senhaUser" placeholder="Senha" class="inputBarSenha">
 
-            </div>
-        </div>
+                </label>
 
+                <div class="buttonsSubmit" id="buttonsSubmit">
 
-        <div class="telaJogo">
-            
-            <h1></h1>
-            
-        </div>
+                    <button class="submit">Criar conta</button>
+
+                </div>
+        
+                <div class="nome">
+
+                    <p>Missão EPI</p>
+
+                </div>
+
+            </section>
+
+        </main>
 
     </body>
 </html>
