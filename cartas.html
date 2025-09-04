@@ -12,10 +12,8 @@
     
     </head>
 
-    <body>
-    
+    <body>  
         <main>
-
             <section class="login" >
 
                 <img src="jab-removebg-preview.jpg" class="jab">
@@ -24,15 +22,22 @@
 
                 <label class="loginInput">
                     
-                    <span>Nome de usuário</span>
+                    <span>Nome de usuário:</span>
                     <input type="text" id="username" placeholder="Usuário" class="inputBarUser"><br>
                 
                 </label>
 
                 <label class="loginInput">
 
-                    <span>Senha</span>
+                    <span>Senha:</span>
                     <input type="password" id="senhaUser" placeholder="Senha" class="inputBarSenha">
+
+                </label>
+
+                <label class="loginInput">
+                    <br>
+                    <span>e-Mail:</span>
+                    <input type="text" id="emailUser" placeholder="e-Mail" class="inputBarEmail">
 
                 </label>
 
@@ -41,16 +46,25 @@
                     <button class="submit">Criar conta</button>
 
                 </div>
-        
+
+                <div class="overlay" id="overlayAni">
+
+                    <div class="mensagemBox" id="mensagem">
+                        
+                        <img src="8631570.png" id="wrong" style="width:80px; height:80px; margin-bottom:12px;">
+                        <p id="mensagemText"></p>
+                   
+                    </div>
+                
+                </div>
+                
                 <div class="nome">
 
-                    <p>Missão EPI</p>
+                    <p>Missão EPI</p><br>
+                    <p></p>
 
                 </div>
-
             </section>
-
         </main>
-
     </body>
 </html>
