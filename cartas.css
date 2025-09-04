@@ -12,6 +12,7 @@ body {
 }
 
 .jab {
+    margin: 10vh;
     width: 250px;
     margin-bottom: 1px;
 }
@@ -36,7 +37,10 @@ body {
 }
 
 .nome {
-
+    margin-top: -28vh;
+    margin-left: 180vh;
+    width: 60% ;
+    font-size: 9vh;
 }
 
 .loginInput {
