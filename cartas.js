@@ -27,16 +27,28 @@ function showBox(text, tipo='sucesso', tempo=1000){
 
 document.querySelector(".submit").addEventListener("click", function(e){
     e.preventDefault();
-    const usernameClick = document.getElementById('username').value;
-    const senhaClick = document.getElementById('senhaUser').value;
-    const emailClick = document.getElementById('emailUser').value;
+    const usernameClick = document.getElementById('username').value.trim();
+    const senhaClick = document.getElementById('senhaUser').value.trim();
+    const emailClick = document.getElementById('emailUser').value.trim();
 
     if(!usernameClick || !senhaClick || !emailClick){
-        showBox('Preencha todos os dados por favor', 'erro');
-    } else {
-        showBox('Conta criada com sucesso! Bem-vindo(a) ' + usernameClick, 'sucesso');
-
-        window.location.href = "login_cartas.html";
+        showBox('Preencha todos os dados por favor', 'erro', 1500);
+        return; // não salva nem redireciona
     }
 
+    const novoUser = {
+        username: usernameClick,
+        senha: senhaClick,
+        email: emailClick,
+    };
+
+    let usuarioCadastrado = JSON.parse(localStorage.getItem("usuarioCadastrado")) || [];
+    usuarioCadastrado.push(novoUser);
+    localStorage.setItem("usuarioCadastrado", JSON.stringify(usuarioCadastrado));
+
+    showBox('Conta criada com sucesso! Bem-vindo(a) ' + usernameClick, 'sucesso', 1500);
+
+    setTimeout(() => {
+        window.location.href = "login_cartas.html";
+    }, 1600);
 });
